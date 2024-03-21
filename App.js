@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button,Alert } from 'react-native';
+
 
 export default function App() {
   return (
@@ -21,7 +22,16 @@ export default function App() {
             <Text style = {styles.listTitle}>Task 3</Text>
             <Text style = {styles.listDescription}>I need to do this First</Text>
           </View>
+          
         </View>
+        <View style = {styles.button}>
+          <Button
+              title = "Add New Todo"
+              onPress = {()=> Alert.alert("New List To Add")}
+              color="#ffb64a"
+              />
+        </View>
+        
       <StatusBar style="auto" />
     </View>
   );
@@ -61,15 +71,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     gap: 5,
-  
     // justifyContent: 'center',
     // alignItems: 'center',
   },
   box:{
   
     width:120,
-    
-    
     backgroundColor:'#ffb64a',
     
   },
@@ -82,5 +89,10 @@ const styles = StyleSheet.create({
   listDescription:{
     fontSize: 12,
     textAlign: 'center',
+  },
+  button:{
+    backgroundColor: 'red',
+    position: 'absolute', 
+    bottom: 15,
   }
 });
