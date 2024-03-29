@@ -11,24 +11,24 @@ export const TodoApp = () =>{
 
     return (
         <View style={styles.container}>
-        <Text style = {styles.header}>My Todo List</Text>
+            <Text style = {styles.header}>My Todo List</Text>
 
-        <View style = {styles.writingArea}>
-          <View style = {styles.box}>
-            <Text style = {styles.listTitle}>Task 1</Text>
-            <Text style = {styles.listDescription}>Description about it what to do and other thing</Text>
-          </View>
+            <View style = {styles.writingArea}>
+                <View style = {styles.box}>
+                    <Text style = {styles.listTitle}>Task 1</Text>
+                    <Text style = {styles.listDescription}>Description about it what to do and other thing</Text>
+                </View>
 
-          <View style = {styles.box}>
-            <Text style = {styles.listTitle}>Task 2</Text>
-            <Text style = {styles.listDescription}>Description about it what to do and other thing</Text>
-          </View>
+                <View style = {styles.box}>
+                    <Text style = {styles.listTitle}>Task 2</Text>
+                    <Text style = {styles.listDescription}>Description about it what to do and other thing</Text>
+                </View>
 
-          <View style = {styles.box}>
-            <Text style = {styles.listTitle}>Task 3</Text>
-            <Text style = {styles.listDescription}>I need to do this First</Text>
-          </View>
-        
+                <View style = {styles.box}>
+                    <Text style = {styles.listTitle}>Task 3</Text>
+                    <Text style = {styles.listDescription}>I need to do this First</Text>
+                </View>
+            
         </View>
         
           <Pressable
