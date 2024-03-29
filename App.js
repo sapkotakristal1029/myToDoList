@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button,Alert } from 'react-native';
-
+import { StyleSheet, Text, View, Button,Alert,Pressable } from 'react-native';
+import{MaterialIcons} from '@expo/vector-icons'
 
 export default function App() {
   return (
@@ -22,15 +22,20 @@ export default function App() {
             <Text style = {styles.listTitle}>Task 3</Text>
             <Text style = {styles.listDescription}>I need to do this First</Text>
           </View>
-          
+        
         </View>
-        <View style = {styles.button}>
-          <Button
-              title = "Add New Todo"
-              onPress = {()=> Alert.alert("New List To Add")}
-              color="#ffb64a"
-              />
-        </View>
+        
+          <Pressable
+              onPress={()=>{Alert.alert('New app')}}
+              style = {styles.addButton}>
+                <MaterialIcons name='add-circle-outline' style = {{fontWeight:'bold'}} size={20} color='black'/>
+                <Text style = {styles.addText}>Add New Todo</Text>
+          </Pressable>
+        
+        
+
+      
+
         
       <StatusBar style="auto" />
     </View>
@@ -66,6 +71,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 7,
     paddingLeft: 7,
+    marginBottom: 50,
     // height: 500,
     backgroundColor: '#ffd596',
     flexWrap: 'wrap',
@@ -90,9 +96,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
   },
-  button:{
-    backgroundColor: 'red',
-    position: 'absolute', 
-    bottom: 15,
+  addButton:{
+    flexDirection: 'row',
+    paddingTop:5,
+    width: 130,
+    height:25,
+    backgroundColor: '#ffb64a',
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  addText:{
+    fontWeight: 'bold',
+    fontSize: 15,
   }
+
 });
