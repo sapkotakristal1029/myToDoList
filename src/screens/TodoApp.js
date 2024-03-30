@@ -33,7 +33,7 @@ export const TodoApp = () =>{
         
           <Pressable
               onPress={gotonewtodo}
-              style = {styles.addButton}>
+              style = {({pressed}) => [(pressed ? {opacity: 0.2}:{}), styles.addButton,]}>
                 <MaterialIcons name='add-circle-outline' style = {{fontWeight:'bold'}} size={20} color='black'/>
                 <Text style = {styles.addText}>Add New Todo</Text>
           </Pressable>
@@ -107,10 +107,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingTop:5,
     width: 130,
-    height:25,
+    height:30,
     backgroundColor: '#ffb64a',
     textAlign: 'center',
     justifyContent: 'center',
+    
   },
   addText:{
     fontWeight: 'bold',
