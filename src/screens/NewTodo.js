@@ -26,8 +26,7 @@ export const NewTodo = ({navigation}) =>{
             <TextInput 
               placeholder="Write Title"
               editable
-              multiline
-              numberOfLines={3}
+             
 
               style = {styles.newtitlewriting} 
               value = {titletext}
@@ -48,11 +47,8 @@ export const NewTodo = ({navigation}) =>{
               style = {styles.newdescriptionwriting}
 
               onChangeText={changeDescriptionTextHandler}/>
-
           </View>
-
         </View>
-        
         <View style = {styles.todobuttons}>
           <Pressable 
             onPress={()=> Alert.alert('List Saved')}
@@ -131,6 +127,7 @@ const styles = StyleSheet.create({
   newtitle:{
     fontSize: 25,
     fontWeight: 'bold',
+  
   },
 
   newtitlewriting:{
@@ -143,7 +140,7 @@ const styles = StyleSheet.create({
     width: 370,
     height: 100 ,
 
-    paddingBottom: 30,
+    paddingBottom: 50,
     alignItems: 'center',
     // marginBottom:10,
 
@@ -155,7 +152,9 @@ const styles = StyleSheet.create({
   },
 
   newdescriptionwriting:{
-    fontSize: 15
+    fontSize: 15,
+    // marginLeft: 40,
+    justifyContent: 'center',
   },
 
   todobuttons:{
@@ -166,7 +165,6 @@ const styles = StyleSheet.create({
   savebutton:{
     flexDirection: 'row',
     padding:5,
- 
     width: 100,
     height:30,
     backgroundColor: '#ffb64a',
