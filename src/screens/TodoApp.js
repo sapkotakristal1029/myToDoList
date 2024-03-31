@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffb64a',
     textAlign: 'center',
     justifyContent: 'center',
-    
   },
   addText:{
     fontWeight: 'bold',
