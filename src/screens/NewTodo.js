@@ -26,8 +26,7 @@ export const NewTodo = ({navigation}) =>{
               style = {styles.newtitlewriting} 
               value = {titletext}
               onChangeText={changeTitleTextHandler}
-              />
-                  
+              />                  
           </View>
 
           <View style = {styles.newdescriptionbox}>

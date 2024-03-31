@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   box:{
     width:120,
     backgroundColor:'#ffb64a',
-    
   },
   listTitle: {
     fontSize: 15,
