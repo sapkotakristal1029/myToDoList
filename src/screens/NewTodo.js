@@ -32,8 +32,7 @@ export const NewTodo = ({navigation}) =>{
               value = {titletext}
               onChangeText={changeTitleTextHandler}
               />
- 
-                    
+                  
           </View>
 
           <View style = {styles.newdescriptionbox}>
