@@ -37,13 +37,6 @@ export const TodoApp = () =>{
                 <MaterialIcons name='add-circle-outline' style = {{fontWeight:'bold'}} size={20} color='black'/>
                 <Text style = {styles.addText}>Add New Todo</Text>
           </Pressable>
-
-        
-        
-
-      
-
-        
       <StatusBar style="auto" />
     </View>
   );
@@ -54,7 +47,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffeacb',
     alignItems: 'center',
-    
   },
   header:{
     
@@ -72,23 +64,19 @@ const styles = StyleSheet.create({
   },
 
   writingArea:{
-    
     width:385,
     paddingBottom: 15,
     paddingTop: 10,
     paddingRight: 7,
     paddingLeft: 7,
     marginBottom: 50,
-    // height: 500,
     backgroundColor: '#ffd596',
     flexWrap: 'wrap',
     flexDirection: 'row',
     gap: 5,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+
   },
   box:{
-  
     width:120,
     backgroundColor:'#ffb64a',
     

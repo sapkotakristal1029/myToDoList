@@ -6,7 +6,6 @@ import { useState } from "react";
 export const NewTodo = ({navigation}) =>{
   const [titletext,setTitleText] = useState('')
   const changeTitleTextHandler = (val) =>setTitleText(val)
-
   const [descriptiontext,setDescriptionText] = useState('')
   const changeDescriptionTextHandler = (val) =>setDescriptionText(val)
 
@@ -18,22 +17,17 @@ export const NewTodo = ({navigation}) =>{
           <Ionicons name="arrow-back" size={24} color="black" />
         </Pressable>
         
-        
-
         <View style = {styles.writingArea}>
           <View style = {styles.newtitlebox}>
             <Text style = {styles.newtitle}>TITLE</Text>
             <TextInput 
               placeholder="Write Title"
               editable
-             
-
               style = {styles.newtitlewriting} 
               value = {titletext}
               onChangeText={changeTitleTextHandler}
               />
- 
-                    
+                  
           </View>
 
           <View style = {styles.newdescriptionbox}>
@@ -75,7 +69,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffeacb',
         alignItems: 'center',
-        
   },
   header:{
     
@@ -89,7 +82,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffd596',
-    
   },
   backicon:{
     position: "absolute", 
@@ -117,7 +109,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#ffb64a',
     width: 370,
     height: 100,
-
     paddingBottom: 50,
     alignItems: 'center',
     marginBottom:10,
@@ -127,19 +118,15 @@ const styles = StyleSheet.create({
   newtitle:{
     fontSize: 25,
     fontWeight: 'bold',
-  
   },
 
   newtitlewriting:{
     fontSize: 15,
-
   },
   newdescriptionbox:{
-    
     backgroundColor:'#ffb64a',
     width: 370,
     height: 100 ,
-
     paddingBottom: 50,
     alignItems: 'center',
     // marginBottom:10,
@@ -153,13 +140,11 @@ const styles = StyleSheet.create({
 
   newdescriptionwriting:{
     fontSize: 15,
-    // marginLeft: 40,
     justifyContent: 'center',
   },
 
   todobuttons:{
     flexDirection: 'row',
-    // flexWrap: 'wrap',
 
   },
   savebutton:{
@@ -180,5 +165,4 @@ const styles = StyleSheet.create({
     width: 150,
   }
   
-
 })
