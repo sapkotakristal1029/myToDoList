@@ -6,7 +6,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { useState,useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { getTodoData,saveTodoData } from '../data/mydata';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -14,7 +14,15 @@ import { getTodoData,saveTodoData } from '../data/mydata';
 export const TodoApp = () =>{
   const route = useRoute();
   
-  const [todoList, setTodoList] = useState([])
+  const [todoList, setTodoList] = useState([]);
+  // useEffect(() => {
+  //   // Update todoList and setTodoList with values from route.params if available
+  //   if (route.params && route.params.todoList) {
+  //     setTodoList(route.params.todoList);
+  //   }
+  // }, [route.params]);
+
+  // const { todoList = [], setTodoList = () => {} } = route.params ?? {};
 
   const navigation = useNavigation();
 
@@ -52,19 +60,57 @@ export const TodoApp = () =>{
       });
     };
 
-    useEffect(() => {getTodoData},[]);
+    useEffect(() => {getTodoData
+      const getTodoData = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('todoList');
+          if (jsonValue !== null) {
+            // If todoList exists in AsyncStorage, set it to state
+            setTodoList(JSON.parse(jsonValue));
+          }
+        } catch (error) {
+          console.error('Error retrieving data from AsyncStorage:', error);
+        }
+      };
   
-  
-    useEffect(() => {
-      saveTodoData(todoList);
-    }, [todoList]);
+      getTodoData();
+    }, []);
 
+    // useEffect(() => {
+    //   navigation.setOptions({
+    //     headerRight: () => (
+    //       <Button
+    //         onPress={() => {
+    //           navigation.navigate('NewTodo', { todoList, setTodoList });
+    //         }}
+    //         title="New Todo"
+    //       />
+    //     ),
+    //   });
+    // }, [navigation, todoList, setTodoList]);
+  
+    
     useEffect(() => {
-      setTodoList(todoList);
-    }, [todoList]);
+      if (route.params?.newTodo) {
+        const { newTodo } = route.params;
+        // Update the todo list state with the new todo item
+        setTodoList([...todoList, newTodo]);
+        navigation.replace('NewTodo',{todoList,back:"Back"})
+        // navigation.navigate('NewTodo',{todoList})
+      }
+    }, [route.params?.newTodo]);
+
     
     const gotonewtodo = () =>{
-      navigation.navigate('NewTodo',{ todoList, setTodoList })}
+      navigation.navigate('NewTodo', {todoList})}
+      
+
+
+    useEffect(() => {
+      saveTodoData(todoList);
+      // setTodoList(todoList);
+    }, [todoList]);
+    
 
     return (      
         <View style={styles.container}>

@@ -13,10 +13,13 @@ export const NewTodo = ({navigation, route}) =>{
 
   const [cancelBtnText,backBtnText] = useState ('CANCEL');
   const textCancel =()=>{
+    
     backBtnText("BACK")
   }
 
-  const { todoList, setTodoList } = route.params;
+
+  // const { todoList, setTodoList } = route.params;
+  const { todoList } = route.params 
 
   const saveButtonHandler = ()=>{
     if ((titletext == '')&&(descriptiontext == '')){
@@ -38,12 +41,13 @@ export const NewTodo = ({navigation, route}) =>{
       // const updatedTodoList = [...todoList, newTodo];
 
       // console.log({settodoList})
-      setTodoList([...todoList, newTodo]);
+      // setTodoList([...todoList, newTodo]);
 
       
       // saveTodoList(todoList);
       // console.log("NewTodo todoList:", todoList);
-      navigation.navigate('NewTodo', { todoList: todoList })     
+      navigation.navigate('TodoApp', { newTodo })
+
   }
 
 }
@@ -98,12 +102,12 @@ export const NewTodo = ({navigation, route}) =>{
          
           <View style = {styles.inbetweenbutton}></View>
           <Pressable 
-            onPress={()=> navigation.goBack()}
+            onPress={()=> navigation.navigate('TodoApp')}
             style = {({pressed}) => [(pressed ? {opacity: 0.2}:{}), styles.savebutton,]}>
               
               {/* <AntDesign name="caretleft" size={20} color="black" style = {styles.hideIcon} /> */}
               <MaterialIcons style = {styles.showIcon} name="delete" size={20} color="black" />
-              <Text style = {styles.savetext} >{cancelBtnText}</Text>
+              <Text style = {styles.savetext} >{(route.params?.back)?"BACK":cancelBtnText}</Text>
           </Pressable>
         </View>  
       </View> 
