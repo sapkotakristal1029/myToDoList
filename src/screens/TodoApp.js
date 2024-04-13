@@ -5,69 +5,27 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useState,useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { NewTodo } from './NewTodo';
+import { getTodoData,saveTodoData } from '../data/mydata';
 
-// import { todoList } from '../components/TodoList';
 
 
 
 
 export const TodoApp = () =>{
   const route = useRoute();
-  console.log("TodoApp route params:", route.params);
-  // const { todoList } = route.params;
+  
+  const [todoList, setTodoList] = useState([])
 
+  const navigation = useNavigation();
 
-  // useEffect(() => {[
-  //   {key:'1',title:'Task 1', description:'Description about it what to do and other thing' },
-  //   {key:'2',title:'Task 2', description:'Description about it what to do and other thing' },
-  //   {key:'3',title:'Task 3', description:'Important task' },
-  //   {key:'4',title:'Task 3', description:'Important task' },
-  //   {key:'5',title:'Task 3', description:'Important task' } ]
-  // }, [todoList]);
-  // console.log(todoList)
+  const [keys, setkeys] = useState([]);
+  const includedKeys = (key) =>{
+    setkeys((prevKeys) => 
+      prevKeys.includes(key)? prevKeys.filter((item) => item !== key) : [...prevKeys, key]
+    )};
 
-  const [todoList, setTodoList] = useState([
-    {key:'1',title:'Task 1', description:'Description about it what to do and other thing' },
-    {key:'2',title:'Task 2', description:'Description about it what to do and other thing' },
-    {key:'3',title:'Task 3', description:'Important task' },
-    {key:'4',title:'Task 3', description:'Important task' },
-    {key:'5',title:'Task 3', description:'Important task' } 
-  ])
-
-  {() =>setTodoList(route.params)}
-
-  // useEffect(() => {
-  //   if (route.params && route.params.todoList) {
-  //     setTodoList(route.params.todoList);
-  //     console.log('hi')
-  //   }
-  // }, [route.params]);
-
-    const navigation = useNavigation();
-
-    const gotonewtodo = () =>{
-        navigation.navigate('NewTodo')}
-
-    const [keys, setkeys] = useState([]);
-    const includedKeys = (key) =>{
-      setkeys((prev) => 
-        prev.includes(key)? prev.filter((item) => item !== key) : [...prev, key]
-      )};
-
-    const [tickedItemKey, setTickItemKey] = useState([])
+    
     const [closeItemKey, setCloseItemKey] = useState([])
-
-    const toogleTick = (key)=>{
-      setTickItemKey((prevKeys) =>{
-        if (prevKeys.includes(key)){
-          return prevKeys.filter((itemkey)=> itemkey !== key)
-        }else{
-          return [...prevKeys, key]
-        }
-      })
-
-    }
     const toogleClose = (key)=>{
       setCloseItemKey((prevKeys) =>{
         if (prevKeys.includes(key)){
@@ -77,40 +35,61 @@ export const TodoApp = () =>{
         }
       })
     }
+
+    const toogleTick = (key)=>{
+      setTodoList(todoList.map(todo => {
+        if (todo.key === key) {
+          return { ...todo, finished: !todo.finished };
+        } else {
+          return todo;
+        }
+      }));
+    }
+
     const removeTodo = (todoitemKey) => {
       setTodoList(todoList => {
         return todoList.filter((todo) => todo.key !== todoitemKey);
       });
     };
 
-    return (
-      
-        
+    useEffect(() => {getTodoData},[]);
+  
+  
+    useEffect(() => {
+      saveTodoData(todoList);
+    }, [todoList]);
+
+    useEffect(() => {
+      setTodoList(todoList);
+    }, [todoList]);
+    
+    const gotonewtodo = () =>{
+      navigation.navigate('NewTodo',{ todoList, setTodoList })}
+
+    return (      
         <View style={styles.container}>
             <Text style = {styles.header}>My Todo List</Text>
-
             <View style = {styles.writingArea}>
 
-              
               <FlatList
                 data = {todoList}
                 renderItem ={({item})=>(
                   <View style = {styles.box}>
                       <Text style = {styles.listTitle}>{item.title}</Text>
                       
-                        
                       {
                         keys.includes(item.key) ?
                           <View>
                             <Text style = {styles.listDescription}>{item.description}</Text>
                             <View>
                               <Pressable
-                                onPress = {()=>{toogleTick(item.key)}}
+                                onPress = {()=>{toogleTick(item.key);
+                                console.log(todoList)}}
 
                                 style = {({pressed}) => (pressed ? {opacity: 0.3, width:0, height:0}:{})}
                                 >
 
-                                <Text style = {styles.listDescriptionTick}><AntDesign name={tickedItemKey.includes(item.key)?"":"checksquareo"} size={24} color="green" /></Text>
+                                <Text style = {styles.listDescriptionTick}><AntDesign name={(item.finished)?"":"checksquareo"} size={24} color="green" /></Text>
                               </Pressable>
                               <Pressable
                                  onPress = {()=>{
@@ -123,7 +102,6 @@ export const TodoApp = () =>{
                                 <Text style = {styles.listDescriptionCross}><AntDesign name={closeItemKey.includes(item.key)?"closesquare":"closesquareo" } size={24} color="red" /></Text>
                               </Pressable>
                              
-                              
                             </View>
                             
                           </View>
@@ -134,16 +112,13 @@ export const TodoApp = () =>{
                         onPress={()=>{
                           includedKeys(item.key);
                         }}>
-
                       { 
                         <View>
                           <Text  style = {styles.arrowDown}><FontAwesome6 
                             name={keys.includes(item.key) ?"arrow-up":"arrow-down-long" } size={20} color="black" /></Text>
-                        </View>
-                         
+                        </View>                         
                       }
-                      </Pressable>
-                        
+                      </Pressable>                      
                   </View>
                 )}
               />

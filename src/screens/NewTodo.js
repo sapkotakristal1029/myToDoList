@@ -2,44 +2,21 @@ import { Text, StyleSheet,Button, View, Pressable,Alert, TextInput, ScrollView, 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from "react";
-import { AntDesign } from '@expo/vector-icons';
 
-import { useEffect } from "react";
-import {  useNavigation } from '@react-navigation/native';
+export const NewTodo = ({navigation, route}) =>{
 
-
-
-export const NewTodo = () =>{
-  const navigation = useNavigation();
-  
-  // const route = useRoute();
-  
-  const [todoList, settodoList] = useState([
-    {key:'1',title:'Task 1', description:'Description about it what to do and other thing' },
-    {key:'2',title:'Task 2', description:'Description about it what to do and other thing' },
-    {key:'3',title:'Task 3', description:'Important task' },
-    {key:'4',title:'Task 3', description:'Important task' },
-    {key:'5',title:'Task 3', description:'Important task' } 
-  ])
-
-  // useEffect(() => {
-  //   navigation.navigate('TodoApp', { todoList:todoList });
-  // }, []);
-
- 
-  
   const [titletext,setTitleText] = useState('')
   const changeTitleTextHandler = (val) =>setTitleText(val)
   const [descriptiontext,setDescriptionText] = useState('')
   const changeDescriptionTextHandler = (val) =>setDescriptionText(val)
   
+
   const [cancelBtnText,backBtnText] = useState ('CANCEL');
   const textCancel =()=>{
     backBtnText("BACK")
   }
 
- 
-
+  const { todoList, setTodoList } = route.params;
 
   const saveButtonHandler = ()=>{
     if ((titletext == '')&&(descriptiontext == '')){
@@ -54,26 +31,21 @@ export const NewTodo = () =>{
       setDescriptionText('');
       {textCancel};
 
-      const newTodo = {key:(todoList.length+1).toString(), title: titletext, description:descriptiontext }
+      const newTodo = {key:(todoList.length+1).toString(), title: titletext, description:descriptiontext, finished:false }
       
       // settodoList([...todoList,newTodo])
       
-      const updatedTodoList = [...todoList, newTodo];
+      // const updatedTodoList = [...todoList, newTodo];
 
       // console.log({settodoList})
-      settodoList(updatedTodoList);
+      setTodoList([...todoList, newTodo]);
 
       
-      
-      console.log("NewTodo todoList:", todoList);
-      navigation.navigate('NewTodo', { todoList: updatedTodoList })
-      
-      
+      // saveTodoList(todoList);
+      // console.log("NewTodo todoList:", todoList);
+      navigation.navigate('NewTodo', { todoList: todoList })     
   }
-  
- 
 
-  console.log(todoList)
 }
 
 
@@ -97,7 +69,6 @@ export const NewTodo = () =>{
               />                  
           </View>
 
-
           <View style = {styles.newdescriptionbox}>
             
               <Text style = {styles.newdescription}>DESCRIPTION</Text>
@@ -119,7 +90,6 @@ export const NewTodo = () =>{
               saveButtonHandler();
               textCancel();
 
-
             }}
             style = {({pressed}) => [(pressed ? {opacity: 0.2}:{}), styles.savebutton,]}>
               <Ionicons name="save" size={20} color="black" />
@@ -136,10 +106,8 @@ export const NewTodo = () =>{
               <Text style = {styles.savetext} >{cancelBtnText}</Text>
           </Pressable>
         </View>  
-      </View>
-    
+      </View> 
 )}
-
 
 const styles = StyleSheet.create({
     container: {
