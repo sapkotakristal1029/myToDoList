@@ -12,12 +12,14 @@ export const TodoApp = () =>{
   const route = useRoute();
   const navigation = useNavigation();
 
+  // To filter if the arrow down is shown or no
   const [keys, setkeys] = useState([]);
   const includedKeys = (key) =>{
     setkeys((prevKeys) => 
       prevKeys.includes(key)? prevKeys.filter((item) => item !== key) : [...prevKeys, key]
     )};
     
+    // function to delete the todos
     const [closeItemKey, setCloseItemKey] = useState([])
     const toogleClose = (key)=>{
       setCloseItemKey((prevKeys) =>{
@@ -29,6 +31,7 @@ export const TodoApp = () =>{
       })
     }
 
+    // Function to state the todo is finished or not
     const toogleTick = (key)=>{
       setTodoList(todoList.map(todo => {
         if (todo.key === key) {
@@ -41,6 +44,7 @@ export const TodoApp = () =>{
 
     const [todoList, setTodoList] = useState([]);
 
+    // Todelete the todos by pressing X in task
     const removeTodo = (todoitemKey) => {
       setTodoList(todoList => {
         return todoList.filter((todo) => todo.key !== todoitemKey);
@@ -62,6 +66,7 @@ export const TodoApp = () =>{
       getTodoData();
     }, []);  
     
+    // To get data passed as NewTodo from add todo page
     useEffect(() => {
       if (route.params?.newTodo) {
         const { newTodo } = route.params;      
@@ -70,13 +75,14 @@ export const TodoApp = () =>{
         navigation.navigate('NewTodo',{todoList,back:"Back"})
       }
     }, [route.params?.newTodo]);
-  
+    
+    // Event handler for Newt todo function
     const gotonewtodo = () =>{
       navigation.navigate('NewTodo', {todoList,back:null})}
       
     useEffect(() => {
       saveTodoData(todoList);
-      // setTodoList(todoList);
+
     }, [todoList]);
     
     return (      

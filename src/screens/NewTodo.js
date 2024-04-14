@@ -1,27 +1,28 @@
-import { Text, StyleSheet,Button, View, Pressable,Alert, TextInput, ScrollView, FlatList } from "react-native";
+import { Text, StyleSheet,Button, View, Pressable,Alert, TextInput } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from "react";
 
 export const NewTodo = ({navigation, route}) =>{
 
+  // To set Title and description
   const [titletext,setTitleText] = useState('')
   const changeTitleTextHandler = (val) =>setTitleText(val)
   const [descriptiontext,setDescriptionText] = useState('')
   const changeDescriptionTextHandler = (val) =>setDescriptionText(val)
   
+  // To change CANCEL to BACK in Add Todo
   const [cancelBtnText,backBtnText] = useState ('CANCEL');
   const textCancel =()=>{
     backBtnText("BACK")
   }
-
+  // Data passed from TodoApp.js
   const { todoList } = route.params 
-  const[keyValue, setKeyValue] = useState(todoList.length)
   
+  // This variable is used to set unique key to the new Todolist
   let currentDateTime = new Date();
 
   const saveButtonHandler = ()=>{
-    setKeyValue(keyValue+1)
     if ((titletext == '')&&(descriptiontext == '')){
       Alert.alert('Both Title field and Description Field is empty')
     }else if (titletext == ''){
