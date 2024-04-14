@@ -5,25 +5,11 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useState,useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { getTodoData,saveTodoData } from '../data/mydata';
+import { saveTodoData } from '../data/mydata';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-
 
 export const TodoApp = () =>{
   const route = useRoute();
-  
-  const [todoList, setTodoList] = useState([]);
-  // useEffect(() => {
-  //   // Update todoList and setTodoList with values from route.params if available
-  //   if (route.params && route.params.todoList) {
-  //     setTodoList(route.params.todoList);
-  //   }
-  // }, [route.params]);
-
-  // const { todoList = [], setTodoList = () => {} } = route.params ?? {};
-
   const navigation = useNavigation();
 
   const [keys, setkeys] = useState([]);
@@ -31,7 +17,6 @@ export const TodoApp = () =>{
     setkeys((prevKeys) => 
       prevKeys.includes(key)? prevKeys.filter((item) => item !== key) : [...prevKeys, key]
     )};
-
     
     const [closeItemKey, setCloseItemKey] = useState([])
     const toogleClose = (key)=>{
@@ -54,6 +39,8 @@ export const TodoApp = () =>{
       }));
     }
 
+    const [todoList, setTodoList] = useState([]);
+
     const removeTodo = (todoitemKey) => {
       setTodoList(todoList => {
         return todoList.filter((todo) => todo.key !== todoitemKey);
@@ -65,7 +52,6 @@ export const TodoApp = () =>{
         try {
           const jsonValue = await AsyncStorage.getItem('todoList');
           if (jsonValue !== null) {
-            // If todoList exists in AsyncStorage, set it to state
             setTodoList(JSON.parse(jsonValue));
           }
         } catch (error) {
@@ -74,44 +60,25 @@ export const TodoApp = () =>{
       };
   
       getTodoData();
-    }, []);
-
-    // useEffect(() => {
-    //   navigation.setOptions({
-    //     headerRight: () => (
-    //       <Button
-    //         onPress={() => {
-    //           navigation.navigate('NewTodo', { todoList, setTodoList });
-    //         }}
-    //         title="New Todo"
-    //       />
-    //     ),
-    //   });
-    // }, [navigation, todoList, setTodoList]);
-  
+    }, []);  
     
     useEffect(() => {
       if (route.params?.newTodo) {
-        const { newTodo } = route.params;
-        // Update the todo list state with the new todo item
+        const { newTodo } = route.params;      
         setTodoList([...todoList, newTodo]);
-        navigation.replace('NewTodo',{todoList,back:"Back"})
-        // navigation.navigate('NewTodo',{todoList})
+        console.log(todoList)
+        navigation.navigate('NewTodo',{todoList,back:"Back"})
       }
     }, [route.params?.newTodo]);
-
-    
+  
     const gotonewtodo = () =>{
-      navigation.navigate('NewTodo', {todoList})}
+      navigation.navigate('NewTodo', {todoList,back:null})}
       
-
-
     useEffect(() => {
       saveTodoData(todoList);
       // setTodoList(todoList);
     }, [todoList]);
     
-
     return (      
         <View style={styles.container}>
             <Text style = {styles.header}>My Todo List</Text>
@@ -121,8 +88,7 @@ export const TodoApp = () =>{
                 data = {todoList}
                 renderItem ={({item})=>(
                   <View style = {styles.box}>
-                      <Text style = {styles.listTitle}>{item.title}</Text>
-                      
+                      <Text style = {styles.listTitle}>{item.title}</Text>                     
                       {
                         keys.includes(item.key) ?
                           <View>
@@ -176,7 +142,6 @@ export const TodoApp = () =>{
                 <MaterialIcons name='add-circle-outline' style = {{fontWeight:'bold'}} size={20} color='black'/>
                 <Text style = {styles.addText}>Add New Todo</Text>
           </Pressable>
-
       <StatusBar style="auto" />
     </View>
   );
@@ -188,8 +153,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffeacb',
     alignItems: 'center',
   },
-  header:{
-    
+  header:{   
     fontSize: 30,
     fontWeight: 'bold',
     marginTop: 30,
@@ -199,8 +163,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffd596',
-    
+    backgroundColor: '#ffd596',    
   },
 
   writingArea:{
@@ -210,16 +173,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 7,
     paddingLeft: 7,
-    marginBottom: 50,
-    
+    marginBottom: 50,    
     backgroundColor: '#ffd596',
     flexWrap: 'wrap',
     flexDirection: 'column',
     gap: 5,
     alignContent: 'center',
-
-
   },
+
   box:{
     width:360,
     paddingBottom: 10,
@@ -229,32 +190,36 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignContent:'center',
   },
+
   listTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center',
-    
+    textAlign: 'center',  
   },
+
   listDescription:{
     fontSize: 15,
     textAlign: 'center',
     width: '90%'
   },
+
   listDescriptionTick:{
     position: 'absolute',
     bottom: 20,
     left:280,
   },
+
   listDescriptionCross:{
     position: 'absolute',
     bottom: 20,
     left:325,
-
   },
+
   arrowDown:{
     fontSize: 10,
     textAlign: 'center'
   },
+
   addButton:{
     flexDirection: 'row',
     paddingTop:5,
@@ -264,9 +229,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
   },
+
   addText:{
     fontWeight: 'bold',
     fontSize: 15,
   }
-
 });
